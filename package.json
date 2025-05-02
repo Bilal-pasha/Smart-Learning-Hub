@@ -17,7 +17,11 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm": "ts-node ./node_modules/typeorm/cli",
+    "migration:run": "npm run typeorm migration:run -- -d ./src/config/typeorm.config.ts",
+    "migration:create": "npm run typeorm -- migration:create ./src/infrastructure/database/migrations/$npm_config_name",
+    "migration:generate": "npm run typeorm -- -d ./src/config/typeorm.config.ts migration:generate ./src/infrastructure/database/migrations/$npm_config_name"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -29,7 +33,8 @@
     "pg": "^8.15.6",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "typeorm": "^0.3.22"
+    "@nestjs/jwt": "^11.0.0",
+    "typeorm": "^0.3.17"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -43,6 +48,7 @@
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.7",
+    "@types/bcryptjs": "^2.4.6",
     "@types/supertest": "^6.0.2",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",

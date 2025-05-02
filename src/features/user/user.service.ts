@@ -19,8 +19,12 @@ export class UserService {
       );
       user.password = hashedPassword;
     }
-    console.log('user', user);
-    return this.userRepository.save(user);
+    try {
+      return this.userRepository.save(user);
+    } catch (e) {
+      console.log(e);
+      throw new Error('Error creating user');
+    }
   }
 
   findAll() {
@@ -29,6 +33,10 @@ export class UserService {
 
   findOne(id: number) {
     return this.userRepository.findOneBy({ id });
+  }
+
+  async findByEmail(email: string): Promise<User | null> {
+    return this.userRepository.findOneBy({ email });
   }
 
   update(id: number, user: Partial<User>) {
