@@ -34,7 +34,7 @@ setup:
 
 # Start the Docker containers
 start:
-	docker-compose -f docker-compose.yml up -d
+	docker-compose -f docker-compose.yml up --build
 
 # Stop and remove the Docker containers
 stop:
