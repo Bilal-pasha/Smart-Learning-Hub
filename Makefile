@@ -31,6 +31,7 @@ setup:
 	@echo "All services are up and running!"
 	@echo "Backend: http://localhost:5000/api/health"
 	@echo "PgAdmin: http://localhost:$(PGADMIN_PORT)"
+	@echo "Frontend: http://localhost3000"
 
 # Start the Docker containers
 start:

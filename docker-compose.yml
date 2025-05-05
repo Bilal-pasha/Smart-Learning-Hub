@@ -2,7 +2,7 @@ services:
   e-learn-db:
     container_name: e-learn-db
     env_file:
-      - .env      
+      - .env
     image: postgres:17
     restart: always
     ports:
@@ -13,14 +13,15 @@ services:
   e-learn-backend:
     container_name: e-learn-backend
     env_file:
-      - .env      
-    image: e-learn-backend
+      - server/.env.local
     build:
+      context: ./server
       dockerfile: Dockerfile
+    image: e-learn-backend
     ports:
       - '5000:5000'
     volumes:
-    - .:/app
+      - ./server:/app
       - /app/node_modules
     depends_on:
       - e-learn-db
@@ -29,11 +30,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-  
+
   pg-admin:
     container_name: pg-admin-app
     env_file:
-      - .env      
+      - server/.env.local
     image: dpage/pgadmin4:snapshot
     restart: always
     ports:
@@ -42,6 +43,19 @@ services:
       - pgadmin-data:/var/lib/pgadmin
     depends_on:
       - e-learn-db
+  e-learn-frontend:
+    container_name: e-learn-frontend
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    image: e-learn-frontend
+    ports:
+      - "3000:3000"
+    env_file:
+      - client/.env.local
+    volumes:
+      - ./client:/app
+      - /app/node_modules
 
 volumes:
   postgres_data:
